@@ -72,7 +72,13 @@ QWT_INSTALL_FEATURES  = $${QWT_INSTALL_PREFIX}/features
 # it will be a static library.
 ######################################################################
 
-QWT_CONFIG           += QwtDll
+QWT_STATIC=$$(QWT_STATIC)
+isEmpty(QWT_STATIC) {
+    QWT_CONFIG           += QwtDll
+    message('using dynamic build')
+} else {
+    message('using static build')
+}
 
 ######################################################################
 # QwtPlot enables all classes, that are needed to use the QwtPlot
@@ -93,13 +99,25 @@ QWT_CONFIG     += QwtWidgets
 # export a plot to a SVG document
 ######################################################################
 
-QWT_CONFIG     += QwtSvg
+QWT_NO_SVG=$$(QWT_NO_SVG)
+isEmpty(QWT_NO_SVG) {
+    QWT_CONFIG     += QwtSvg
+    message('enable svg support')
+} else {
+    message('disable svg support')
+}
 
 ######################################################################
 # If you want to use a OpenGL plot canvas
 ######################################################################
 
-QWT_CONFIG     += QwtOpenGL
+QWT_NO_OPENGL=$$(QWT_NO_OPENGL)
+isEmpty(QWT_NO_OPENGL) {
+    QWT_CONFIG     += QwtOpenGL
+    message('enable opengl support')
+} else {
+    message('disable opengl support')
+}
 
 ######################################################################
 # You can use the MathML renderer of the Qt solutions package to
@@ -118,7 +136,13 @@ QWT_CONFIG     += QwtOpenGL
 # Otherwise you have to build it from the designer directory.
 ######################################################################
 
-QWT_CONFIG     += QwtDesigner
+QWT_NO_DESIGNER=$$(QWT_NO_DESIGNER)
+isEmpty(QWT_NO_DESIGNER) {
+    QWT_CONFIG     += QwtDesigner
+    message('enable designer plugin')
+} else {
+    message('disable designer plugin')
+}
 
 ######################################################################
 # Compile all Qwt classes into the designer plugin instead
